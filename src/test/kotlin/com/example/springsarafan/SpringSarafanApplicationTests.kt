@@ -1,4 +1,4 @@
-package com.example.SpringSarafan
+package com.example.springsarafan
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

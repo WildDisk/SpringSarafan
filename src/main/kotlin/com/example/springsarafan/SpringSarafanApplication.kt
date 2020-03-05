@@ -1,4 +1,4 @@
-package com.example.SpringSarafan
+package com.example.springsarafan
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
