@@ -18,7 +18,7 @@ Vue.component('message-form', {
         }
     },
     watch: {
-        messageAttr: function (newVal, oldVal) {
+        messageAttr: function (newVal) {
             this.text = newVal.text;
             this.id = newVal.id;
         }
@@ -67,9 +67,9 @@ Vue.component('message-row', {
         },
         del: function () {
             messageApi.remove({id: this.message.id}).then(result => {
-               if (result.ok) {
-                   this.messages.splice(this.messages.indexOf(this.message), 1)
-               }
+                if (result.ok) {
+                    this.messages.splice(this.messages.indexOf(this.message), 1)
+                }
             });
         }
     }

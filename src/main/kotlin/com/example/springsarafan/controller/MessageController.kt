@@ -1,8 +1,12 @@
 package com.example.springsarafan.controller
 
-import com.example.springsarafan.exception.NotFoundException
+import com.example.springsarafan.model.Message
+import com.example.springsarafan.model.Views
+import com.example.springsarafan.repository.MessageRepository
+import com.fasterxml.jackson.annotation.JsonView
+import org.springframework.beans.BeanUtils
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
-import java.util.*
 
 
 /**
@@ -14,66 +18,32 @@ import java.util.*
 
 @RestController
 @RequestMapping("message")
-class MessageController {
-    private var counter = 4
-    private val messages: ArrayList<MutableMap<String, String>> = object : ArrayList<MutableMap<String, String>>() {
-        init {
-            add(object : HashMap<String, String>() {
-                init {
-                    put("id", "1")
-                    put("text", "First message")
-                }
-            })
-            add(object : HashMap<String, String>() {
-                init {
-                    put("id", "2")
-                    put("text", "Second message")
-                }
-            })
-            add(object : HashMap<String, String>() {
-                init {
-                    put("id", "3")
-                    put("text", "Third message")
-                }
-            })
-        }
-    }
-
+class MessageController(
+        @Autowired
+        private val messageRepository: MessageRepository
+) {
     @GetMapping
-    fun list(): List<MutableMap<String, String>> {
-        return messages
-    }
+    @JsonView(Views.IdName::class)
+    fun list(): MutableList<Message> = messageRepository.findAll()
 
     @GetMapping("{id}")
-    fun getOne(@PathVariable id: String): Map<String, String> {
-        return getMessage(id)
-    }
-
-    private fun getMessage(@PathVariable id: String): MutableMap<String, String> {
-        return messages.stream()
-                .filter { message: Map<String, String> -> message["id"] == id }
-                .findFirst()
-                .orElseThrow { NotFoundException() }
-    }
+    @JsonView(Views.FullMessage::class)
+    fun getOne(@PathVariable("id") message: Message): Message = message
 
     @PostMapping
-    fun create(@RequestBody message: MutableMap<String, String>): Map<String, String> {
-        message["id"] = counter++.toString()
-        messages.add(message)
-        return message
-    }
+    fun create(@RequestBody message: Message): Message = messageRepository.save(message)
 
     @PutMapping("{id}")
-    fun update(@PathVariable id: String, @RequestBody message: Map<String, String>?): Map<String, String> {
-        val messageFromDb = getMessage(id)
-        messageFromDb.putAll(message!!)
-        messageFromDb["id"] = id
-        return messageFromDb
+    fun update(
+            @PathVariable("id") messageFromDb: Message,
+            @RequestBody message: Message
+    ): Message {
+        BeanUtils.copyProperties(message, messageFromDb, "id")
+        return messageRepository.save(messageFromDb)
     }
 
     @DeleteMapping("{id}")
-    fun delete(@PathVariable id: String) {
-        val message = getMessage(id)
-        messages.remove(message)
+    fun delete(@PathVariable("id") message: Message) {
+        messageRepository.delete(message)
     }
 }
