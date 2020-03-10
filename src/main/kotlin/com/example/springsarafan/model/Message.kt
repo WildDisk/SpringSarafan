@@ -16,7 +16,7 @@ import javax.persistence.*
 class Message(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        @JsonView(Views.IdName::class)
+        @JsonView(Views.Id::class)
         val id: Long = 0,
         @JsonView(Views.IdName::class)
         var text: String = "",
