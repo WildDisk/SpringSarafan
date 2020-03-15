@@ -24,11 +24,14 @@ import java.time.LocalDateTime
 class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity?) {
         http
+                ?.antMatcher("/**")
                 ?.authorizeRequests()
-                ?.mvcMatchers("/")?.permitAll()
-                ?.anyRequest()?.authenticated()
+                    ?.antMatchers("/", "/login**", "/js/**", "/error**")?.permitAll()
+                    ?.anyRequest()?.authenticated()
                 ?.and()
-                ?.csrf()?.disable()
+                    ?.logout()?.logoutSuccessUrl("/")?.permitAll()
+                ?.and()
+                    ?.csrf()?.disable()
     }
 
     @Bean

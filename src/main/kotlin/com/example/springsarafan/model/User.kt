@@ -1,5 +1,7 @@
 package com.example.springsarafan.model
 
+import com.fasterxml.jackson.annotation.JsonFormat
+import java.io.Serializable
 import java.time.LocalDateTime
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -21,5 +23,6 @@ class User(
         var email: String = "",
         var gender: String? = "",
         var locale: String? = "",
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         var lastVisit: LocalDateTime = LocalDateTime.now()
-)
+) : Serializable
