@@ -6,6 +6,8 @@ import com.example.springsarafan.repository.MessageRepository
 import com.fasterxml.jackson.annotation.JsonView
 import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.messaging.handler.annotation.MessageMapping
+import org.springframework.messaging.handler.annotation.SendTo
 import org.springframework.web.bind.annotation.*
 
 
@@ -46,4 +48,8 @@ class MessageController(
     fun delete(@PathVariable("id") message: Message) {
         messageRepository.delete(message)
     }
+
+    @MessageMapping("/changeMessage")
+    @SendTo("/topic/activity")
+    fun change(message: Message): Message = messageRepository.save(message)
 }
