@@ -10,5 +10,4 @@ import org.springframework.data.jpa.repository.JpaRepository
  * @author WildDisk on 10.03.2020
  */
 interface UserDetailsRepository : JpaRepository<User, String> {
-
 }
