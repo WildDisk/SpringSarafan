@@ -27,8 +27,10 @@ class MainController(
     @GetMapping
     fun main(model: Model, @AuthenticationPrincipal user: User?): String {
         val data = HashMap<Any, Any?>()
-        data["profile"] = user
-        data["messages"] = messageRepository.findAll()
+        if (user != null) {
+            data["profile"] = user
+            data["messages"] = messageRepository.findAll()
+        }
         model.addAttribute("frontendData", data)
         model.addAttribute("isDevMode", "dev" == profile)
         return "index"
