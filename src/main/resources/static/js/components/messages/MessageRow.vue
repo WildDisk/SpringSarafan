@@ -1,12 +1,3 @@
-<!--<template>-->
-<!--    <div>-->
-<!--        <i>({{message.id}})</i> {{message.text}}-->
-<!--        <span style="position: absolute; right: 0">-->
-<!--            <input type="button" value="Edit" @click="edit" />-->
-<!--            <input type="button" value="X" @click="del">-->
-<!--        </span>-->
-<!--    </div>-->
-<!--</template>-->
 <template>
     <v-card class="my-2">
         <v-card-text title="title">

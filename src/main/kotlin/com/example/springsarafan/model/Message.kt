@@ -23,5 +23,5 @@ class Message(
         @Column(updatable = false)
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         @JsonView(Views.FullMessage::class)
-        val creationDate: LocalDateTime = LocalDateTime.now()
+        var creationDate: LocalDateTime = LocalDateTime.now()
 )

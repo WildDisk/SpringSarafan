@@ -1,14 +1,3 @@
-<!--<template>-->
-<!--    <div style="position: relative; width: 300px;">-->
-<!--        <message-form :messages="messages" :messageAttr="message"/>-->
-<!--        <message-row v-for="message in messages"-->
-<!--                     :key="message.id"-->
-<!--                     :message="message"-->
-<!--                     :editMessage="editMessage"-->
-<!--                     :deleteMessage="deleteMessage"-->
-<!--                     :messages="messages"/>-->
-<!--    </div>-->
-<!--</template>-->
 <template>
     <v-layout align-content-space-around justify-start column>
         <message-form :messages="messages" :message-attr="message"/>
@@ -24,6 +13,7 @@
 <script>
     import MessageRow from './MessageRow.vue'
     import MessageForm from './MessageForm.vue'
+    import messagesApi from '../../api/messages'
 
     export default {
         props: ['messages'],
@@ -46,7 +36,7 @@
                 this.message = message
             },
             deleteMessage(message) {
-                this.$resource('/message{/id}').remove({id: message.id}).then(result => {
+                messagesApi.remove(message.id).then(result => {
                     if (result.ok) {
                         this.messages.splice(this.messages.indexOf(message), 1)
                     }

@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import VueResource from 'vue-resource'
 import Vuetify from "vuetify";
-import App from '../pages/App.vue'
-import {connect} from "../pages/util/ws";
+import "../js/api/resources.js"
+import App from './pages/App.vue'
+import {connect} from "./util/ws";
 import 'vuetify/dist/vuetify.min.css'
 
 if (frontendData.profile) {
@@ -10,8 +10,6 @@ if (frontendData.profile) {
 }
 
 Vue.use(Vuetify);
-// export default new Vuetify({ })
-Vue.use(VueResource);
 
 new Vue({
     el: '#app',
